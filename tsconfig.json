@@ -13,10 +13,12 @@
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "preserveWatchOutput": true,
+        "resolveJsonModule": true, 
         "skipLibCheck": true,
         "strict": true,
         "strictNullChecks": true,
         "types": ["node"]
     },
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "include": ["**/*.ts", "**/*.json"]
 }
