@@ -1,8 +1,9 @@
-import path from "path";
 import express, { Express } from "express";
 import cors from "cors";
 import { WeatherResponse } from "@full-stack/types";
 import fetch from "node-fetch";
+
+import collectionRoutes from "./routes/collections";
 
 const app: Express = express();
 
@@ -11,8 +12,9 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json());
+app.use("/api", collectionRoutes);
 
-type WeatherData = {
+/*type WeatherData = {
     latitude: number;
     longitude: number;
     timezone: string;
@@ -24,7 +26,7 @@ type WeatherData = {
     };
 };
 
-app.get("/weather", async (req, res) => {
+app.get("/api/weather", async (req, res) => {
     console.log("GET /api/weather was called");
     try {
         const response = await fetch(
@@ -43,4 +45,4 @@ app.get("/weather", async (req, res) => {
 
 app.listen(port, hostname, () => {
     console.log("Listening");
-});
+});*/

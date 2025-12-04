@@ -12,5 +12,8 @@
         "turbo": "latest"
     },
     "packageManager": "pnpm@8.6.10",
-    "name": "full-stack"
+    "name": "full-stack",
+    "dependencies": {
+        "typescript": "^5.9.3"
+    }
 }
