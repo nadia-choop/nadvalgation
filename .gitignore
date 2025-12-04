@@ -42,3 +42,5 @@ yarn-error.log*
 server/.env
 
 service_account.json
+backend/service_account.json
+**/service_account.json
