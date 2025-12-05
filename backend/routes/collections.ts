@@ -92,7 +92,7 @@ router.get("/users/:userId/collections/:collectionId", async (req, res) => {
     res.json({ id: doc.id, ...doc.data() });
 });
 
-// update a specific collection
+// update a specific collection (bucket list name and title)
 router.put("/users/:userId/collections/:collectionId", async (req, res) => {
     const {userId, collectionId} = req.params;
     const {name, description} = (req.body ?? {}) as { name?: string; description?: string };
@@ -150,7 +150,7 @@ router.get("/users/:userId/collections/:collectionId/items/:itemId", async (req,
     }
 });
 
-// update a location
+// update a location's status, review etc
 router.put("/users/:userId/collections/:collectionId/items/:itemId", async (req, res) => {
     const { userId, collectionId, itemId } = req.params;
     const updateData = (req.body ?? {}) as Partial<Omit<LocationDto, "id">>;
