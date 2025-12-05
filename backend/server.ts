@@ -2,10 +2,13 @@ import express, { Express } from "express";
 import cors from "cors";
 import { WeatherResponse } from "@full-stack/types";
 import fetch from "node-fetch";
+console.log("1. Starting server.ts");
 
 import collectionRoutes from "./routes/collections";
+console.log("2. Routes imported");
 
 const app: Express = express();
+console.log("3. Express app created");
 
 const hostname = "0.0.0.0";
 const port = 8080;
@@ -13,6 +16,11 @@ const port = 8080;
 app.use(cors());
 app.use(express.json());
 app.use("/api", collectionRoutes);
+
+app.listen(port, hostname, () => {
+    console.log("Listening");
+});
+
 
 /*type WeatherData = {
     latitude: number;

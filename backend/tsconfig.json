@@ -6,7 +6,13 @@
         "declaration": true,
         "outDir": "./dist",
         "esModuleInterop": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "@full-stack/types": ["../lib/types/index.ts"],
+            "@full-stack/common": ["../lib/common/index.ts"]
+        }
     },
     "include": ["**/*.ts"]
 }
