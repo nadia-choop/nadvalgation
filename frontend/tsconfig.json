@@ -7,10 +7,12 @@
         "skipLibCheck": true,
 
         "moduleResolution": "node",
-        /*"allowImportingTsExtensions": true,*/
-        "resolveJsonModule": true,
+        "composite": true,
+        "emitDeclarationOnly": true,
+        "allowImportingTsExtensions": true,
+        
+        // "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": true,
         "jsx": "react-jsx",
 
         "baseUrl": ".",
