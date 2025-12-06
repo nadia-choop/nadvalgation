@@ -1,3 +1,4 @@
+import "./env";
 import express, { Express } from "express";
 import cors from "cors";
 import collectionRoutes from "./routes/collections";

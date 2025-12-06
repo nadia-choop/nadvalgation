@@ -1,5 +1,3 @@
-import Weather from "../pages/Weather";
-import Counter from "../pages/Counter";
 import HomePage from "../pages/Home";
 import Places from "../pages/Places";
 
@@ -31,15 +29,5 @@ export const PATHS: {
         link: "/places",
         label: "Places",
         element: <Places />,
-    },
-    {
-        link: "/weather",
-        label: "Weather",
-        element: <Weather />,
-    },
-    {
-        link: "/counter",
-        label: "Counter",
-        element: <Counter />,
     },
 ];
