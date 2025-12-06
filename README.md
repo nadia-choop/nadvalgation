@@ -40,6 +40,10 @@ To edit the backend, `cd` into `backend` and make changes as you would normally 
 
 To edit types that are _shared_ between the frontend and backend, `cd` into `lib/types`, and put your types in `index.ts`. You can put miscellaneous types here that you want to share between the frontend and backend in the `src` directory within. Don't forget to export them!
 
+## Google Places/Maps
+
+- Backend needs `GOOGLE_MAPS_API_KEY` in its environment (enabled for Places API).
+- Frontend reads `VITE_BACKEND_BASE_PATH` (defaults to `http://localhost:8080/api`) and optionally `VITE_GOOGLE_MAPS_KEY` to render static map/photo previews.
 ## Deploying
 
 We recommend using [Fly.io](https://fly.io/) for deployment.

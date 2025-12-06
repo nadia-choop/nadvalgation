@@ -6,6 +6,7 @@
     "dependencies": {
         "@full-stack/common": "1.0.0",
         "@full-stack/types": "workspace:*",
+        "@googlemaps/google-maps-services-js": "^3.4.2",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "firebase": "^9.17.2",
