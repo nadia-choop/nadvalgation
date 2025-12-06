@@ -236,5 +236,31 @@ router.delete("/users/:userId/collections/:collectionId/items/:itemId", async (r
 }
 );
 
+
+// get all locations across all collections for a user
+router.get("/users/:userId/locations", async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const collectionsSnapshot = await collectionsForUser(userId).get();
+        const allLocations: any[] = [];
+        
+        for (const collectionDoc of collectionsSnapshot.docs) {
+            const locationsSnapshot = await locationsForCollection(userId, collectionDoc.id).get();
+            locationsSnapshot.docs.forEach(locationDoc => {
+                allLocations.push({
+                    id: locationDoc.id,
+                    collectionId: collectionDoc.id,
+                    ...locationDoc.data()
+                });
+            });
+        }
+        
+        res.json(allLocations);
+    } catch (err) {
+        console.error("Error fetching all locations:", err);
+        return res.status(500).json({ error: "failed to fetch locations" });
+    }
+});
+
 export default router;
 
