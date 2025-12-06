@@ -71,7 +71,6 @@ export function LocationCard({
       </CardHeader>
 
       <CardContent className="space-y-4">
-
         <div className="flex items-center space-x-2">
           <Checkbox
             id={`visited-${id}`}
