@@ -18,7 +18,7 @@ interface PlacesResponse {
 
 export async function searchPlaces(query: string): Promise<PlaceResult[]> {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    if (!apiKey || apiKey === "AIzaSyBQ3PdEx1L4TBs7eyfHBpAmiF50wr0VJMI") {
+    if (!apiKey || apiKey === "AIzaSyAIUbHZxOUrfo8IaUQ-Ifen4K3AHhKUnKI") {
         throw new Error("Google Maps API key not configured. Add VITE_GOOGLE_MAPS_API_KEY to your .env file");
     }
 
