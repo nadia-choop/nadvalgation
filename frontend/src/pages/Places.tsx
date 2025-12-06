@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { BACKEND_BASE_PATH } from "../constants/Navigation";
+import { getCollections, createCollection, addLocationToCollection } from "../utils/api";
 
 type PlaceSummary = {
     name: string;
@@ -20,6 +21,7 @@ type PlaceDetail = PlaceSummary & {
 const staticMapKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
 const defaultCoords = { lat: 37.7749, lng: -122.4194 }; // fallback to SF if geolocation denied
+const CURRENT_USER_ID = "test-user";
 
 const PlacesPage = () => {
     const [query, setQuery] = useState("");
@@ -32,6 +34,9 @@ const PlacesPage = () => {
     const [detail, setDetail] = useState<PlaceDetail | null>(null);
     const [detailLoading, setDetailLoading] = useState(false);
     const [detailError, setDetailError] = useState<string | null>(null);
+    const [saving, setSaving] = useState(false);
+    const [saveMessage, setSaveMessage] = useState<string | null>(null);
+    const [saved, setSaved] = useState(false);
 
     // Get user location once, with fallback
     useEffect(() => {
@@ -102,12 +107,44 @@ const PlacesPage = () => {
                     setDetailError("Unable to load details");
                 }
             } finally {
-                setDetailLoading(false);
+            setDetailLoading(false);
             }
         })();
 
         return () => controller.abort();
     }, [selected]);
+
+    // reset save state when selecting a new place
+    useEffect(() => {
+        setSaved(false);
+        setSaveMessage(null);
+    }, [detail?.placeId]);
+
+    const ensureDefaultCollection = async (): Promise<string> => {
+        const collections = await getCollections(CURRENT_USER_ID);
+        if (collections.length > 0) return collections[0].id;
+        const created = await createCollection(CURRENT_USER_ID, "Saved Places", "Places I want to visit");
+        return created.id;
+    };
+
+    const handleSave = async () => {
+        if (!detail) return;
+        setSaving(true);
+        setSaveMessage(null);
+        try {
+            const collectionId = await ensureDefaultCollection();
+            await addLocationToCollection(CURRENT_USER_ID, collectionId, detail.name, detail.address);
+            setSaveMessage("Saved to your list");
+            setSaved(true);
+        } catch (err) {
+            console.error("Error saving place:", err);
+            setSaveMessage("Failed to save place");
+            setSaved(false);
+        } finally {
+            setSaving(false);
+            setTimeout(() => setSaveMessage(null), 3000);
+        }
+    };
 
     const previewImage = useMemo(() => {
         if (!staticMapKey || !detail) return null;
@@ -198,6 +235,23 @@ const PlacesPage = () => {
                             ) : (
                                 <p style={{ color: "#666" }}>Add VITE_GOOGLE_MAPS_KEY to show a map or photo preview.</p>
                             )}
+                            <div style={{ marginTop: "0.75rem", display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                                <button
+                                    onClick={handleSave}
+                                    disabled={saving}
+                                    style={{
+                                        padding: "0.6rem 1rem",
+                                        borderRadius: 8,
+                                        border: "none",
+                                        background: saved ? "#60a5fa" : saving ? "#9aa3af" : "#2563eb",
+                                        color: "white",
+                                        cursor: saving ? "not-allowed" : "pointer",
+                                    }}
+                                >
+                                    {saving ? "Saving..." : saved ? "Remove from my list" : "Save to my list"}
+                                </button>
+                                {saveMessage && <span style={{ color: "#111", fontSize: "0.9rem" }}>{saveMessage}</span>}
+                            </div>
                         </div>
                     )}
                 </div>
